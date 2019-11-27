@@ -32,6 +32,7 @@ export default class ImageOps extends React.Component {
             image_object_details: {},
             active_type: null ,
             bloqueado : false ,
+            porcentagem : 0 ,
             noticias : [],
             value:""
         }
@@ -71,6 +72,8 @@ export default class ImageOps extends React.Component {
                     data: this.state.image_object
                 }).then((response) => {
 
+                    console.log(response);
+
          
 
                     let limpo = true ;
@@ -89,7 +92,7 @@ export default class ImageOps extends React.Component {
                         })
 
                     }else{
-                        this.setState({bloqueado:true})
+                        this.setState({bloqueado:true,porcentagem:response.data[0].probability*100})
                     }
 
 
@@ -120,10 +123,13 @@ export default class ImageOps extends React.Component {
             <>
             { this.state.bloqueado &&  
             <div style={{
+                
+                position:'fixed',
+                top:0,
                 width:'100%',
                 backgroundColor: '#d90b00'
             }}>
-                <h5 style={{color:'#fff'}}>Foto postada foi classificada como imprópria!</h5>
+    <h5 style={{color:'#fff'}}>Foto postada foi classificada como imprópria! {this.state.porcentagem}% </h5>
             </div> 
             }
             
